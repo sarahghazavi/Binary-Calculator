@@ -56,6 +56,11 @@ void handleButtonPress(char pressed)
     } else if (pressed == '=') {
         String result = processInput(input);
         printLCD("Result: ", result);
+        if (result != "ERROR!" && result != "# Division by Zero!") {
+            input = binary(result);
+            if (input[0] == '-')
+                input = '(' + input + ')';
+        }
         return;
     } else
         input += pressed;
@@ -89,6 +94,26 @@ String BCD(String input)
     }
     if (temp.length() > 0)
         result += String(strtol(temp.c_str(), NULL, 2));
+    return result;
+}
+
+String binary(String input)
+{
+    String result = "";
+    String temp = "";
+    for (char c : input) {
+        if (isdigit(c))
+            temp += c;
+        else {
+            if (temp.length() > 0) {
+                result += String(strtol(temp.c_str(), NULL, 10), BIN);
+                temp = "";
+            }
+            result += c;
+        }
+    }
+    if (temp.length() > 0)
+        result += String(strtol(temp.c_str(), NULL, 10), BIN);
     return result;
 }
 
