@@ -70,7 +70,7 @@ def create_calculator_gui():
         if arduino.in_waiting > 0:
             lcd_output = arduino.readline().decode('utf-8').strip()
             lcd_text.set(lcd_output[-19:])
-        window.after(1000, update_lcd_monitor)  
+        window.after(200, update_lcd_monitor)  
 
     window.after(200, update_lcd_monitor)
     window.mainloop()
